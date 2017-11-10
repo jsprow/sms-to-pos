@@ -1,0 +1,48 @@
+.sms
+{
+    display: flex;
+    align-items: center;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+
+    width: 80vw;
+}
+.sms-incoming-box,
+.sms-reply-box
+{
+    display: flex;
+    align-items: center;
+    flex-flow: row nowrap;
+}
+.sms-incoming-box
+{
+    width: 30vw;
+}
+.sms-incoming-box > p
+{
+    margin-right: 5vw;
+}
+.sms-incoming-box > img {
+    width: 20vw;
+    clip-path: inset(5vw 5vw);
+}
+.sms-reply-box > textarea
+{
+    font-size: 1rem;
+
+    box-sizing: border-box;
+    width: 30vw;
+    height: 3rem;
+    margin: 0;
+    padding: .25rem;
+
+    resize: none;
+}
+.sms-reply-box > button
+{
+    font-size: 1rem;
+
+    box-sizing: border-box;
+    height: 3rem;
+    margin: 0;
+}

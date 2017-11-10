@@ -1,0 +1,30 @@
+{
+  "name": "sms-to-pos",
+  "version": "0.0.1",
+  "license": "MIT",
+  "scripts": {
+    "start": "react-scripts start",
+    "start-dev": "nf start -p 3000"
+  },
+  "dependencies": {
+    "@okta/jwt-verifier": "^0.0.2",
+    "@okta/okta-react": "^0.0.7",
+    "cors": "^2.8.4",
+    "express": "^4.16.2",
+    "foreman": "^2.0.0",
+    "guid": "^0.0.12",
+    "isomorphic-fetch": "^2.2.1",
+    "mongodb": "^2.2.33",
+    "nodemon": "^1.12.1",
+    "react": "^16.1.0",
+    "react-dom": "^16.1.0",
+    "react-router": "^4.2.0",
+    "react-router-dom": "^4.2.2",
+    "socket.io": "^2.0.4",
+    "socket.io-client": "^2.0.4",
+    "twilio": "^3.9.2"
+  },
+  "devDependencies": {
+    "react-scripts": "^1.0.17"
+  }
+}
