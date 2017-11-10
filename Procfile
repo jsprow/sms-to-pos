@@ -1,2 +1,2 @@
-web: yarn start
+web: react-scripts start
 api: nodemon server.js
