@@ -43,29 +43,6 @@ server.listen(3200, () => {
 	console.log('socket.io listening on port 3200')
 })
 
-// io.configure(function() {
-// 	io.set('transports', ['xhr-polling'])
-// 	io.set('polling duration', 10)
-// })
-
-MongoClient.connect(
-	'mongodb://jsprow:N8fdwn8D3YTW@ds251985.mlab.com:51985/sms-to-pos',
-	{ native_parser: true },
-	(err, db) => {
-		if (err) throw new Error(err)
-
-		const users = db.collection('users')
-
-		users.find().toArray((err, docs) => {
-			if (err) throw new Error(err)
-
-			console.log(docs)
-
-			db.close()
-		})
-	}
-)
-
 router.get('/', function(req, res) {
 	res.json({ message: 'API Initialized!' })
 })
@@ -79,6 +56,37 @@ app.listen(port, function() {
 io.on('connection', socket => {
 	console.log('Client connected')
 
+	socket.on('get-user', data => {
+		const timestamp = new Date()
+		const user = {
+			_id: data.sub,
+			lastUpdated: timestamp,
+			email: data.email,
+			firstname: data.given_name,
+			lastname: data.family_name
+		}
+
+		MongoClient.connect(
+			'mongodb://jsprow:N8fdwn8D3YTW@ds251985.mlab.com:51985/sms-to-pos',
+			{ native_parser: true },
+			(err, db) => {
+				if (err) throw new Error(err)
+
+				const users = db.collection('users')
+
+				users.updateOne(
+					{ _id: user._id },
+					{ $set: user },
+					{ upsert: true },
+					(err, res) => {
+						if (err) throw new Error(err)
+						console.log('user inserted')
+					}
+				)
+			}
+		)
+	})
+
 	app.post('/api/sms', (req, res) => {
 		console.log(`mobile=${req.body.From} message=${req.body.Body}`)
 
@@ -90,8 +98,6 @@ io.on('connection', socket => {
 	})
 
 	socket.on('reply', data => {
-		console.log('heard', data)
-
 		client.messages
 			.create({
 				to: data.mobile,

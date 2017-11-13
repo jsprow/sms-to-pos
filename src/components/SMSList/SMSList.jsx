@@ -29,7 +29,7 @@ export default withAuth(
 			const socket = socketIOClient(this.state.endpoint)
 
 			this.props.auth.getUser().then(data => {
-				console.log(data)
+				socket.emit('get-user', data)
 			})
 
 			socket.on('incoming', data => {
@@ -55,7 +55,9 @@ export default withAuth(
 					<Link to="/">Home</Link><br />
 					<Link to="/sms-list">SMS List</Link><br />
 					<button onClick={this.props.auth.logout}>Logout</button>
-					<p>To test the app, send a message with or without a picture to (269) 601-7387</p>
+					<p>
+						To test the app, send a message with or without a picture to (269) 601-7387
+					</p>
 					<ul className="sms-list" ref="smsList">
 						{this.state.responses.map((response, index) => {
 							return (
